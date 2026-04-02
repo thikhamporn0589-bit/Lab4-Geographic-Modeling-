@@ -4,9 +4,9 @@
 
 ---
 
-## 3. Methodology
+## 1. Methodology
 
-### 3.1 Data Sources
+### 1.1 Data Sources
 
 - MODIS LST (MOD11A2) — อุณหภูมิพื้นผิว
 - Sentinel-2 — ใช้คำนวณ NDVI และ NDBI
@@ -14,7 +14,7 @@
 
 ---
 
-### 3.2 Factors Selection
+### 1.2 Factors Selection
 
 แบบจำลองนี้ใช้ 4 ปัจจัยหลัก:
 
@@ -32,7 +32,7 @@
 
 ---
 
-### 3.3 Normalization
+### 1.3 Normalization
 
 ใช้วิธี Min-Max Normalization:
 
@@ -46,7 +46,7 @@ X_{norm} = \frac{X - X_{min}}{X_{max} - X_{min}}
 
 ---
 
-### 3.4 Weight Assignment
+### 1.4 Weight Assignment
 
 น้ำหนักของแต่ละปัจจัย:
 
@@ -65,7 +65,7 @@ X_{norm} = \frac{X - X_{min}}{X_{max} - X_{min}}
 
 ---
 
-### 3.5 Model Equation
+### 1.5 Model Equation
 
 \[
 Heat\ Risk = (0.30 \cdot NDVI') + (0.25 \cdot LST) + (0.25 \cdot NDBI) + (0.20 \cdot DEM')
@@ -73,7 +73,7 @@ Heat\ Risk = (0.30 \cdot NDVI') + (0.25 \cdot LST) + (0.25 \cdot NDBI) + (0.20 \
 
 ---
 
-### 3.6 Classification
+### 1.6 Classification
 
 แบ่งระดับความเสี่ยงเป็น 3 ระดับ:
 
@@ -85,9 +85,9 @@ Heat\ Risk = (0.30 \cdot NDVI') + (0.25 \cdot LST) + (0.25 \cdot NDBI) + (0.20 \
 
 ---
 
-## 4. Results
+## 2. Results
 
-### 4.1 Model Statistics
+### 2.1 Model Statistics
 
 - Mean: 0.444  
 - Min: 0.249  
@@ -108,7 +108,7 @@ Heat\ Risk = (0.30 \cdot NDVI') + (0.25 \cdot LST) + (0.25 \cdot NDBI) + (0.20 \
 
 ---
 
-## 5. Sensitivity Analysis
+## 3. Sensitivity Analysis
 
 มีการปรับน้ำหนัก NDVI ±20% และพบว่า:
 
@@ -119,7 +119,7 @@ Heat\ Risk = (0.30 \cdot NDVI') + (0.25 \cdot LST) + (0.25 \cdot NDBI) + (0.20 \
 
 ---
 
-## 6. Validation
+## 4. Validation
 
 ใช้ LST เป็น proxy validation โดยเปรียบเทียบค่าเฉลี่ย:
 
@@ -134,13 +134,13 @@ Heat\ Risk = (0.30 \cdot NDVI') + (0.25 \cdot LST) + (0.25 \cdot NDBI) + (0.20 \
 
 ---
 
-## 7. Discussion
+## 5. Discussion
 
 โมเดลสามารถสะท้อนรูปแบบความร้อนในเมืองได้ดี โดยเฉพาะบทบาทของ vegetation และ built-up อย่างไรก็ตาม ความละเอียดของข้อมูล (MODIS) และการขาดข้อมูลเชิงลึก เช่น building height ส่งผลต่อความแม่นยำ
 
 ---
 
-## 8. Limitations
+## 6. Limitations
 
 - ไม่มีข้อมูลความสูงของอาคาร (3D urban structure)
 - ไม่มีข้อมูล wind flow
@@ -149,49 +149,12 @@ Heat\ Risk = (0.30 \cdot NDVI') + (0.25 \cdot LST) + (0.25 \cdot NDBI) + (0.20 \
 
 ---
 
-## 9. Conclusion
+## 7. Conclusion
 
 แบบจำลอง Urban Heat Risk ที่พัฒนาขึ้นสามารถใช้วิเคราะห์ความเสี่ยงความร้อนในระดับเมืองได้อย่างมีประสิทธิภาพ โดยมีความเสถียรสูงและสะท้อนรูปแบบเชิงพื้นที่ได้ดี เหมาะสำหรับการวางแผนเชิงนโยบายและการจัดการพื้นที่เมือง
 
 ---
 
-## 10. Answers to Questions
-
-### 1. Accuracy ของโมเดล
-
-คาดว่าอยู่ในระดับปานกลาง (~70–80%) เนื่องจากใช้ proxy validation และไม่มี ground truth แต่มีความสอดคล้องกับหลักการทางวิทยาศาสตร์
-
----
-
-### 2. ปัจจัยที่ไม่ได้ใส่
-
-- Building height  
-- Population density  
-- Wind speed  
-- Surface materials  
-
-ไม่ได้ใส่เนื่องจากข้อจำกัดของข้อมูลใน GEE และความซับซ้อนของโมเดล
-
----
-
-### 3. Scale ที่เหมาะสม
-
-เหมาะกับระดับ **เมือง (city scale)**  
-เนื่องจาก
-- resolution ของข้อมูล (MODIS)
-- ปัจจัยที่ใช้เป็น macro-scale
-
----
-
-### 4. การอัปเดตโมเดล
-
-ต้องทำซ้ำ
-- ดึงข้อมูลใหม่ (LST, Sentinel-2)
-- Normalize
-
-ไม่ต้องเปลี่ยน
-- สมการโมเดล
-- Weight
 
 # Answers to Questions
 
